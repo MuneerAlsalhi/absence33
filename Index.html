@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة رصد الغياب المدرسي - مدرسة الشيخ سالم الصائغي</title>
+    <!-- مكتبة الأيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --bg-main: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section (الرئيسية) */
+        .hero-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .hero-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 28px;
+            padding: 30px 20px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-icon {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .school-badge {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .hero-card h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .school-info-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .info-pill {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border-glass);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .info-pill span {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .developer-credit {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-glass);
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .developer-credit span {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* الأزرار العامة */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 12px 22px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .btn { width: auto; }
+            .hero-card { padding: 45px 40px; }
+            .hero-card h1 { font-size: 2.3rem; }
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border-glass);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-main);
+            box-shadow: none;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+        }
+        .btn-danger:hover { box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6); }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+        }
+        .btn-warning:hover { box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6); }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+        }
+        .btn-success:hover { box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6); }
+
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+
+        /* تسجيل الدخول */
+        .login-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            padding: 25px 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (min-width: 640px) {
+            .login-card { padding: 40px; }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .input-field, textarea.input-field, select.input-field, input[type="date"].input-field, input[type="month"].input-field {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        textarea.input-field { padding-left: 16px; }
+        select.input-field { padding-left: 16px; }
+        input[type="date"].input-field, input[type="month"].input-field { padding-left: 16px; color-scheme: dark; }
+
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+        }
+
+        /* الحاويات الداخلية */
+        .container {
+            max-width: 1200px;
+            margin: 15px auto;
+            width: 95%;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 20px 15px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (min-width: 640px) {
+            .container { margin: 30px auto; padding: 35px; }
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 640px) {
+            h2 { font-size: 1.8rem; }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        .back-link:hover { color: var(--text-main); }
+
+        .admin-section {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .admin-section { padding: 25px; margin-bottom: 25px; }
+        }
+
+        .admin-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary);
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 640px) {
+            .admin-section h3 { font-size: 1.2rem; }
+        }
+
+        /* الفلاتر */
+        .filters {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-glass);
+        }
+
+        @media (min-width: 768px) {
+            .filters { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); padding: 20px; }
+        }
+
+        .filters label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* الجداول الاحترافية المتجاوبة تماماً */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-glass);
+            margin-top: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        th, td {
+            padding: 12px 14px;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: rgba(15, 23, 42, 0.9);
+            color: var(--secondary);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        tr:not(:last-child) td {
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-select {
+            padding: 6px 10px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-weight: 600;
+            outline: none;
+            font-size: 0.85rem;
+        }
+
+        /* التقارير */
+        .reports-section {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .report-card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 15px;
+        }
+
+        @media (min-width: 640px) {
+            .report-card { padding: 20px; }
+        }
+
+        .report-card h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 640px) {
+            .report-card h3 { font-size: 1.1rem; }
+        }
+
+        .report-card.absence h3 { color: var(--danger); }
+        .report-card.late h3 { color: var(--accent); }
+
+        .report-list {
+            list-style: none;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .report-item {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-glass);
+            font-size: 0.85rem;
+        }
+
+        /* تنسيق الطباعة للتقرير الشهري */
+        @media print {
+            body { background: white; color: black; }
+            .page, .container { background: white; box-shadow: none; border: none; width: 100%; margin: 0; padding: 0; }
+            .hero-container, .login-wrapper, .admin-section:not(#monthly-report-box), .back-link, .btn { display: none !important; }
+            #monthly-report-box { border: 2px solid #000 !important; background: white !important; color: black !important; }
+            #monthly-report-box * { color: black !important; }
+            table th { background: #eee !important; color: black !important; border: 1px solid #000; }
+            table td { border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الواجهة الرئيسية -->
+    <div id="home-page" class="page active">
+        <div class="hero-container">
+            <div class="hero-card">
+                <i class="fa-solid fa-school hero-icon"></i>
+                <div class="school-badge"><i class="fa-solid fa-bookmark"></i> مدرسة الشيخ سالم الصائغي</div>
+                <h1>منصة رصد الغياب الذكية</h1>
+                <p>نظام إلكتروني متطور لتتبع حضور وغياب الطلاب بكل مرونة، مع دعم الصفوف المتنقلة والربط التلقائي، ولوحة تحكم إدارية متكاملة.</p>
+                
+                <div class="school-info-box">
+                    <div class="info-pill"><i class="fa-solid fa-user-tie"></i> مدير المدرسة: <span>الأستاذ يونس الحجري</span></div>
+                </div>
+
+                <div class="hero-buttons">
+                    <button class="btn" onclick="showPage('teacher-page')">
+                        <i class="fa-solid fa-chalkboard-user"></i> بوابة المعلمين
+                    </button>
+                    <button class="btn btn-outline" onclick="goToAdmin()">
+                        <i class="fa-solid fa-shield-halved"></i> لوحة الإدارة
+                    </button>
+                </div>
+
+                <div class="developer-credit">
+                    <i class="fa-solid fa-code"></i> تطوير وبرمجة: <span>الأستاذ منير الصالحي</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- تسجيل دخول الإدارة -->
+    <div id="login-page" class="page">
+        <div class="login-wrapper">
+            <div class="login-card">
+                <a href="#" class="back-link" onclick="showPage('home-page')"><i class="fa-solid fa-arrow-right"></i> عودة للرئيسية</a>
+                <h2 style="border:none; margin-bottom: 8px; padding:0; font-size:1.3rem;">تسجيل الإدارة</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">مرحباً بك أستاذ يونس. أدخل الرقم السري للوصول للوحة التحكم</p>
+                
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="admin-pass" class="input-field" placeholder="أدخل الرقم السري">
+                </div>
+                
+                <button class="btn" style="width: 100%; justify-content: center;" onclick="checkAdminLogin()">
+                    <i class="fa-solid fa-right-to-bracket"></i> دخول للنظام
+                </button>
+                <p id="error-msg" style="color: var(--danger); font-size: 0.8rem; margin-top: 12px; display: none; text-align: center;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> الرقم السري غير صحيح!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- لوحة تحكم الإدارة -->
+    <div id="admin-dashboard" class="page">
+        <div class="container">
+            <a href="#" class="back-link" onclick="logoutAdmin()"><i class="fa-solid fa-arrow-right"></i> تسجيل الخروج</a>
+            <h2><i class="fa-solid fa-sliders" style="color: var(--secondary);"></i> لوحة إدارة المدرسة - الأستاذ يونس الحجري</h2>
+            
+            <!-- قسم إدارة المعلمين -->
+            <div class="admin-section">
+                <h3><i class="fa-solid fa-chalkboard-user" style="color: var(--secondary);"></i> إدارة المعلمين</h3>
+                <div style="display: flex; gap: 12px; align-items: flex-end; margin-bottom: 15px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 220px;">
+                        <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color:var(--text-muted);">إضافة معلم مفرد:</label>
+                        <input type="text" id="new-teacher-name" class="input-field" placeholder="مثال: الأستاذ سالم المعمري">
+                    </div>
+                    <div style="width: 100%; sm:width: auto;">
+                        <button class="btn" onclick="addNewTeacher()" style="width: 100%;">
+                            <i class="fa-solid fa-user-plus"></i> إضافة معلم
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-glass); margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color: var(--accent);">
+                        <i class="fa-solid fa-users"></i> إدخال المعلمين دفعة واحدة (كل معلم في سطر مستقل):
+                    </label>
+                    <textarea id="batch-teachers-text" class="input-field" rows="3" placeholder="الأستاذ سالم المعمري&#10;الأستاذ خالد العلوي" style="margin-bottom: 10px;"></textarea>
+                    <button class="btn btn-warning btn-sm" onclick="addBatchTeachers()">
+                        <i class="fa-solid fa-file-arrow-down"></i> حفظ وإضافة دفعة المعلمين
+                    </button>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color:var(--secondary);">
+                        <i class="fa-solid fa-list"></i> قائمة المعلمين المسجلين:
+                    </label>
+                    <select id="admin-teachers-dropdown" class="input-field">
+                        <option value="">-- اختر من قائمة المعلمين --</option>
+                    </select>
+                </div>
+
+                <div class="table-responsive" style="max-height: 180px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم المعلم</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-teachers-tbody">
+                            <tr><td colspan="2" style="color: var(--text-muted);">لا توجد أسماء معلمين مسجلة</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- التقرير الشهري حسب الصف والتاريخ -->
+            <div class="admin-section" id="monthly-report-box">
+                <h3><i class="fa-solid fa-file-lines" style="color: var(--accent);"></i> التقرير الشهري لحالات الغياب والتأخير للطلاب</h3>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 12px; align-items: flex-end; margin-bottom: 15px;">
+                    @media (min-width: 768px) {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color:var(--text-muted);">اختر الشهر والسنة:</label>
+                        <input type="month" id="report-month-input" class="input-field" onchange="loadMonthlyReport()">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color:var(--text-muted);">اختر الصف:</label>
+                        <select id="monthly-grade-select" class="input-field" onchange="loadMonthlyReport()"></select>
+                    </div>
+                    <div>
+                        <button class="btn btn-success" onclick="window.print()" style="width: 100%; justify-content: center;">
+                            <i class="fa-solid fa-print"></i> طباعة التقرير
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 15px;">
+                    @media (min-width: 640px) {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 10px; border: 1px solid var(--border-glass); text-align:center;">
+                        <div style="color: var(--text-muted); font-size: 0.8rem;">إجمالي طلاب الصف</div>
+                        <div style="font-size: 1.3rem; font-weight: bold; color: var(--secondary);" id="rep-total-students">0</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 10px; border: 1px solid var(--border-glass); text-align:center;">
+                        <div style="color: var(--text-muted); font-size: 0.8rem;">إجمالي حالات الغياب بالشهر</div>
+                        <div style="font-size: 1.3rem; font-weight: bold; color: var(--danger);" id="rep-total-absence">0 حالات</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 10px; border: 1px solid var(--border-glass); text-align:center;">
+                        <div style="color: var(--text-muted); font-size: 0.8rem;">إجمالي حالات التأخير بالشهر</div>
+                        <div style="font-size: 1.3rem; font-weight: bold; color: var(--accent);" id="rep-total-late">0 حالات</div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم الطالب</th>
+                                <th>اسم الطالب</th>
+                                <th>عدد أيام الغياب</th>
+                                <th>عدد أيام التأخير</th>
+                                <th>حالة المتابعة</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthly-report-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- إضافة مجموعة طلاب دفعة واحدة (ثابت أو متنقل) -->
+            <div class="admin-section">
+                <h3><i class="fa-solid fa-users-rectangle"></i> إدخال صف جديد أو صف متنقل لمادة معينة</h3>
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color:var(--text-muted);">اسم الصف (أو الصف المتنقل للمادة):</label>
+                    <input type="text" id="batch-grade-name" class="input-field" placeholder="مثال: الأول الثانوي (أ) أو صف مادة الفيزياء المتنقل">
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color:var(--text-muted);">قائمة الطلاب (رقم الطالب - اسم الطالب في كل سطر بنفس أرقامهم الأساسية):</label>
+                    <textarea id="batch-students-text" class="input-field" rows="4" placeholder="101 - أحمد محمد علي&#10;102 - خالد إبراهيم سعيد"></textarea>
+                </div>
+                <button class="btn" onclick="addBatchStudentsToSystem()" style="width: 100%;">
+                    <i class="fa-solid fa-file-arrow-down"></i> حفظ وإضافة الصف للطلاب
+                </button>
+            </div>
+
+            <!-- إدارة وحذف وتعديل الصفوف والطلاب -->
+            <div class="admin-section">
+                <h3><i class="fa-solid fa-pen-to-square"></i> إدارة الصفوف والطلاب (حذف أو تعديل)</h3>
+                <div style="display: flex; gap: 12px; align-items: flex-end; margin-bottom: 15px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display:block; margin-bottom:5px; font-weight:600; font-size:0.85rem; color:var(--text-muted);">اختر الصف:</label>
+                        <select id="admin-grade-select" class="input-field" onchange="loadAdminStudentsTable()"></select>
+                    </div>
+                    <div style="width: 100%; sm:width: auto;">
+                        <button class="btn btn-danger btn-sm" onclick="deleteSelectedGrade()" style="width: 100%;">
+                            <i class="fa-solid fa-trash"></i> حذف الصف المحدد بالكامل
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="max-height: 250px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم الطالب</th>
+                                <th>اسم الطالب</th>
+                                <th>إجراءات التحكم</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-students-tbody">
+                            <tr><td colspan="3" style="color: var(--text-muted);">اختر صفاً لعرض طلابه</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="background: rgba(79, 70, 229, 0.1); border: 1px solid rgba(79, 70, 229, 0.3); padding: 15px; border-radius: var(--radius-md); text-align: center;">
+                <h4 style="color: var(--secondary); font-size: 1rem; margin-bottom: 4px;">إجمالي الصفوف الحالية في المدرسة</h4>
+                <p id="total-grades-count" style="font-size: 1.5rem; font-weight: bold; color: var(--text-main);">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة المعلمين -->
+    <div id="teacher-page" class="page">
+        <div class="container">
+            <a href="#" class="back-link" onclick="showPage('home-page')"><i class="fa-solid fa-arrow-right"></i> عودة للرئيسية</a>
+            <h2><i class="fa-solid fa-user-pen" style="color: var(--secondary);"></i> بوابة المعلمين - مدرسة الشيخ سالم الصائغي</h2>
+            
+            <div class="filters">
+                <div>
+                    <label><i class="fa-solid fa-magnifying-glass"></i> بحث سريع باسم المعلم (أكتب بعض الحروف):</label>
+                    <input type="text" id="teacher-search-input" class="input-field" placeholder="مثال: منير أو سالم..." oninput="filterTeacherDropdown()" style="margin-bottom: 8px;">
+                    
+                    <label><i class="fa-solid fa-chalkboard-user"></i> اسم المعلم المسجل:</label>
+                    <select id="teacher-name-select" class="input-field" onchange="updateReports()">
+                        <option value="">اختر اسم المعلم</option>
+                    </select>
+                </div>
+                <div>
+                    <label><i class="fa-solid fa-calendar-days"></i> تاريخ اليوم الدراسي:</label>
+                    <input type="date" id="attendance-date" class="input-field" onchange="updateReports()">
+                </div>
+                <div>
+                    <label>اليوم الدراسي:</label>
+                    <select id="day-select" class="input-field">
+                        <option>الأحد</option>
+                        <option>الإثنين</option>
+                        <option>الثلاثاء</option>
+                        <option>الأربعاء</option>
+                        <option>الخميس</option>
+                    </select>
+                </div>
+                <div>
+                    <label>الحصة الدراسية الحالية للرصد:</label>
+                    <select id="class-period" class="input-field" onchange="updateReports()">
+                        <option>الحصة الأولى</option>
+                        <option>الحصة الثانية</option>
+                        <option>الحصة الثالثة</option>
+                        <option>الحصة الرابعة</option>
+                        <option>الحصة الخامسة</option>
+                        <option>الحصة السادسة</option>
+                        <option>الحصة السابعة</option>
+                        <option>الحصة الثامنة</option>
+                    </select>
+                </div>
+                <div>
+                    <label>اختر الصف (الثابت أو المتنقل للمادة):</label>
+                    <select id="grade-select" class="input-field" onchange="updateReports()"></select>
+                </div>
+            </div>
+
+            <!-- أزرار الحفظ والإجراءات السريعة -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 15px;">
+                <button class="btn btn-success" onclick="markAllPresent()" style="flex: 1; min-width: 200px; justify-content: center;">
+                    <i class="fa-solid fa-circle-check"></i> لا يوجد غائب بالحصة (إثبات حضور الجميع)
+                </button>
+                <button class="btn" onclick="saveAttendance()" style="flex: 1; min-width: 200px; justify-content: center;">
+                    <i class="fa-solid fa-floppy-disk"></i> حفظ رصد الحصة والربط التلقائي بالصف الأساسي
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم الطالب</th>
+                            <th>اسم الطالب</th>
+                            <th>الحالة</th>
+                            <th>ملاحظات / عذر</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-table-body"></tbody>
+                </table>
+            </div>
+
+            <!-- التقارير اليومية لليوم الكامل حسب الصف المختار -->
+            <div class="reports-section">
+                <div class="report-card absence">
+                    <h3 id="daily-report-title"><i class="fa-solid fa-calendar-day"></i> التقرير اليومي الشامل لليوم الكامل (اختر الصف لعرضه)</h3>
+                    <ul id="daily-comprehensive-report-list" class="report-list">
+                        <li class="report-item" style="color: var(--text-muted); justify-content: center;">الرجاء اختيار الصف وتحديد التاريخ لعرض تقرير اليوم الكامل</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let studentsData = JSON.parse(localStorage.getItem('salem_school_students')) || {
+            "الأول الثانوي (أ)": [
+                { id: 101, name: "أحمد محمد علي" },
+                { id: 102, name: "خالد إبراهيم سعيد" }
+            ],
+            "الثاني الثانوي (أ)": [
+                { id: 201, name: "فهد ناصر الدوسري" }
+            ],
+            "مادة الفيزياء (صف متنقل)": [
+                { id: 101, name: "أحمد محمد علي" },
+                { id: 201, name: "فهد ناصر الدوسري" }
+            ]
+        };
+
+        let teachersData = JSON.parse(localStorage.getItem('salem_school_teachers')) || [
+            "الأستاذ منير الصالحي",
+            "الأستاذ سالم المعمري"
+        ];
+
+        let attendanceLogs = JSON.parse(localStorage.getItem('salem_school_attendance')) || [];
+
+        function saveToLocalStorage() {
+            localStorage.setItem('salem_school_students', JSON.stringify(studentsData));
+            localStorage.setItem('salem_school_teachers', JSON.stringify(teachersData));
+            localStorage.setItem('salem_school_attendance', JSON.stringify(attendanceLogs));
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            if(pageId === 'teacher-page') {
+                populateGradeDropdown('grade-select');
+                document.getElementById('teacher-search-input').value = '';
+                populateTeacherDropdown(teachersData);
+                if (!document.getElementById('attendance-date').value) {
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('attendance-date').value = today;
+                }
+                updateReports();
+            } else if(pageId === 'admin-dashboard') {
+                updateAdminStats();
+                populateGradeDropdown('admin-grade-select');
+                populateGradeDropdown('monthly-grade-select');
+                loadAdminTeachersTable();
+                
+                if (!document.getElementById('report-month-input').value) {
+                    const currentMonthStr = new Date().toISOString().slice(0, 7);
+                    document.getElementById('report-month-input').value = currentMonthStr;
+                }
+
+                loadAdminStudentsTable();
+                loadMonthlyReport();
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function goToAdmin() {
+            sessionStorage.removeItem('admin_logged_in');
+            document.getElementById('admin-pass').value = '';
+            document.getElementById('error-msg').style.display = 'none';
+            showPage('login-page');
+        }
+
+        function checkAdminLogin() {
+            const pass = document.getElementById('admin-pass').value;
+            const errorMsg = document.getElementById('error-msg');
+            if (pass === '1234') {
+                sessionStorage.setItem('admin_logged_in', 'true');
+                errorMsg.style.display = 'none';
+                document.getElementById('admin-pass').value = '';
+                showPage('admin-dashboard');
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('admin_logged_in');
+            showPage('home-page');
+        }
+
+        function populateTeacherDropdown(listToDisplay) {
+            const selectEl = document.getElementById('teacher-name-select');
+            const currentVal = selectEl.value;
+            selectEl.innerHTML = '<option value="">اختر اسم المعلم</option>';
+            
+            listToDisplay.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t;
+                opt.textContent = t;
+                selectEl.appendChild(opt);
+            });
+            
+            if(currentVal && listToDisplay.includes(currentVal)) {
+                selectEl.value = currentVal;
+            }
+        }
+
+        function filterTeacherDropdown() {
+            const query = document.getElementById('teacher-search-input').value.trim().toLowerCase();
+            
+            if (!query) {
+                populateTeacherDropdown(teachersData);
+                return;
+            }
+
+            const filtered = teachersData.filter(t => t.toLowerCase().includes(query));
+            populateTeacherDropdown(filtered);
+
+            if (filtered.length === 1) {
+                document.getElementById('teacher-name-select').value = filtered[0];
+                updateReports();
+            }
+        }
+
+        function populateAdminTeachersDropdown() {
+            const dropdownEl = document.getElementById('admin-teachers-dropdown');
+            if(!dropdownEl) return;
+            dropdownEl.innerHTML = '<option value="">-- اختر من قائمة المعلمين --</option>';
+            teachersData.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t;
+                opt.textContent = t;
+                dropdownEl.appendChild(opt);
+            });
+        }
+
+        function addNewTeacher() {
+            const nameInput = document.getElementById('new-teacher-name');
+            const teacherName = nameInput.value.trim();
+
+            if (!teacherName) {
+                alert('الرجاء إدخال اسم المعلم.');
+                return;
+            }
+
+            if (teachersData.includes(teacherName)) {
+                alert('هذا المعلم مسجل مسبقاً.');
+                return;
+            }
+
+            teachersData.push(teacherName);
+            saveToLocalStorage();
+            nameInput.value = '';
+            loadAdminTeachersTable();
+            populateTeacherDropdown(teachersData);
+            alert('تم إضافة المعلم بنجاح.');
+        }
+
+        function addBatchTeachers() {
+            const rawText = document.getElementById('batch-teachers-text').value.trim();
+            if (!rawText) {
+                alert('الرجاء كتابة أو لصق قائمة أسماء المعلمين.');
+                return;
+            }
+
+            const lines = rawText.split('\n');
+            let addedCount = 0;
+
+            lines.forEach(line => {
+                const teacherName = line.trim();
+                if (teacherName && !teachersData.includes(teacherName)) {
+                    teachersData.push(teacherName);
+                    addedCount++;
+                }
+            });
+
+            saveToLocalStorage();
+            document.getElementById('batch-teachers-text').value = '';
+            loadAdminTeachersTable();
+            populateTeacherDropdown(teachersData);
+            alert(`تم بنجاح إضافة (${addedCount}) معلماً جديداً للقائمة!`);
+        }
+
+        function loadAdminTeachersTable() {
+            const tbody = document.getElementById('admin-teachers-tbody');
+            tbody.innerHTML = '';
+            populateAdminTeachersDropdown();
+
+            if (teachersData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" style="color: var(--text-muted);">لا توجد أسماء معلمين مسجلة</td></tr>';
+                return;
+            }
+
+            teachersData.forEach((teacher, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 600;">${teacher}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteTeacher(${index})"><i class="fa-solid fa-trash"></i> حذف</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function deleteTeacher(index) {
+            if (confirm(`هل أنت متأكد من حذف المعلم (${teachersData[index]})؟`)) {
+                teachersData.splice(index, 1);
+                saveToLocalStorage();
+                loadAdminTeachersTable();
+                populateTeacherDropdown(teachersData);
+            }
+        }
+
+        function populateGradeDropdown(selectId) {
+            const gradeSelect = document.getElementById(selectId);
+            gradeSelect.innerHTML = '';
+            const grades = Object.keys(studentsData);
+            
+            if (grades.length === 0) {
+                gradeSelect.innerHTML = '<option value="">لا توجد صفوف مضافة</option>';
+                if(selectId === 'grade-select') {
+                    document.getElementById('students-table-body').innerHTML = '<tr><td colspan="4" style="color:var(--danger);">يرجى إضافة صفوف وطلاب من الإدارة أولاً</td></tr>';
+                }
+                return;
+            }
+
+            grades.forEach(grade => {
+                const opt = document.createElement('option');
+                opt.value = grade;
+                opt.textContent = grade;
+                gradeSelect.appendChild(opt);
+            });
+
+            if(selectId === 'grade-select') updateReports();
+            if(selectId === 'admin-grade-select') loadAdminStudentsTable();
+            if(selectId === 'monthly-grade-select') loadMonthlyReport();
+        }
+
+        function updateAdminStats() {
+            document.getElementById('total-grades-count').textContent = Object.keys(studentsData).length;
+        }
+
+        function loadMonthlyReport() {
+            const gradeName = document.getElementById('monthly-grade-select').value;
+            const selectedMonthValue = document.getElementById('report-month-input').value;
+            const tbody = document.getElementById('monthly-report-tbody');
+            tbody.innerHTML = '';
+
+            const students = studentsData[gradeName] || [];
+            document.getElementById('rep-total-students').textContent = students.length;
+
+            if (students.length === 0) {
+                document.getElementById('rep-total-absence').textContent = "0 حالات";
+                document.getElementById('rep-total-late').textContent = "0 حالات";
+                tbody.innerHTML = '<tr><td colspan="5" style="color: var(--text-muted);">لا توجد طلاب مسجلة في هذا الصف</td></tr>';
+                return;
+            }
+
+            let totalMonthAbsence = 0;
+            let totalMonthLate = 0;
+
+            const studentStats = {};
+            students.forEach(s => {
+                studentStats[s.id] = { name: s.name, absence: 0, late: 0 };
+            });
+
+            attendanceLogs.forEach(log => {
+                if (log.grade === gradeName && log.date.startsWith(selectedMonthValue)) {
+                    if (log.status === 'absent' && studentStats[log.studentId]) {
+                        studentStats[log.studentId].absence++;
+                        totalMonthAbsence++;
+                    } else if (log.status === 'late' && studentStats[log.studentId]) {
+                        studentStats[log.studentId].late++;
+                        totalMonthLate++;
+                    }
+                }
+            });
+
+            document.getElementById('rep-total-absence').textContent = `${totalMonthAbsence} حالات`;
+            document.getElementById('rep-total-late').textContent = `${totalMonthLate} حالات`;
+
+            // فلترة الطلاب بحيث يظهر فقط من لديهم غياب أو تأخير (أكبر من 0)
+            const studentsWithAbsenceOrLate = students.filter(student => {
+                const stat = studentStats[student.id];
+                return stat.absence > 0 || stat.late > 0;
+            });
+
+            if (studentsWithAbsenceOrLate.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="color: var(--success); font-weight: bold;">لا توجد أي حالات غياب أو تأخير مسجلة لهذا الصف في هذا الشهر (جميع الطلاب منتظمون)</td></tr>';
+                return;
+            }
+
+            studentsWithAbsenceOrLate.forEach(student => {
+                const stat = studentStats[student.id];
+                let commitmentBadge = '<span style="color: var(--success); font-weight: bold;">منتظم</span>';
+                if (stat.absence > 5 || stat.late > 8) {
+                    commitmentBadge = '<span style="color: var(--danger); font-weight: bold;">يحتاج متابعة</span>';
+                } else if (stat.absence > 0 || stat.late > 0) {
+                    commitmentBadge = '<span style="color: var(--accent); font-weight: bold;">تنبيه</span>';
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${student.id}</td>
+                    <td style="font-weight: 600;">${stat.name}</td>
+                    <td style="color: var(--danger); font-weight: bold;">${stat.absence}</td>
+                    <td style="color: var(--accent); font-weight: bold;">${stat.late}</td>
+                    <td>${commitmentBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addBatchStudentsToSystem() {
+            const gradeName = document.getElementById('batch-grade-name').value.trim();
+            const rawText = document.getElementById('batch-students-text').value.trim();
+
+            if (!gradeName || !rawText) {
+                alert('الرجاء كتابة اسم الصف وقائمة الطلاب.');
+                return;
+            }
+
+            if (!studentsData[gradeName]) {
+                studentsData[gradeName] = [];
+            }
+
+            const lines = rawText.split('\n');
+            let addedCount = 0;
+
+            lines.forEach(line => {
+                if (!line.trim()) return;
+                let parts = line.split('-');
+                if (parts.length < 2) parts = line.trim().split(/\s+(.+)/);
+
+                if (parts.length >= 2) {
+                    const id = Number(parts[0].trim());
+                    const name = parts[1].trim();
+                    if (!isNaN(id) && name) {
+                        const exists = studentsData[gradeName].some(s => s.id === id);
+                        if (!exists) {
+                            studentsData[gradeName].push({ id: id, name: name });
+                            addedCount++;
+                        }
+                    }
+                }
+            });
+
+            saveToLocalStorage();
+            alert(`تم بنجاح حفظ صف (${gradeName}) وضم الطلاب بناءً على أرقامهم الأساسية!`);
+            document.getElementById('batch-grade-name').value = '';
+            document.getElementById('batch-students-text').value = '';
+            updateAdminStats();
+            populateGradeDropdown('admin-grade-select');
+            populateGradeDropdown('monthly-grade-select');
+        }
+
+        function deleteSelectedGrade() {
+            const gradeName = document.getElementById('admin-grade-select').value;
+            if (!gradeName) return;
+
+            if (confirm(`هل أنت متأكد من حذف صف (${gradeName}) بكافة طلابه نهائياً؟`)) {
+                delete studentsData[gradeName];
+                saveToLocalStorage();
+                updateAdminStats();
+                populateGradeDropdown('admin-grade-select');
+                populateGradeDropdown('monthly-grade-select');
+                alert('تم حذف الصف بنجاح.');
+            }
+        }
+
+        function loadAdminStudentsTable() {
+            const gradeName = document.getElementById('admin-grade-select').value;
+            const tbody = document.getElementById('admin-students-tbody');
+            tbody.innerHTML = '';
+
+            const students = studentsData[gradeName] || [];
+            if (students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="color: var(--text-muted);">لا توجد طلاب مسجلة في هذا الصف</td></tr>';
+                return;
+            }
+
+            students.forEach((student, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="number" value="${student.id}" id="edit-id-${index}" class="input-field" style="padding:6px; text-align:center;"></td>
+                    <td><input type="text" value="${student.name}" id="edit-name-${index}" class="input-field" style="padding:6px;"></td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="updateStudent(${index})"><i class="fa-solid fa-check"></i> تعديل</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStudent(${index})"><i class="fa-solid fa-trash"></i> حذف</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateStudent(index) {
+            const gradeName = document.getElementById('admin-grade-select').value;
+            const newId = Number(document.getElementById(`edit-id-${index}`).value);
+            const newName = document.getElementById(`edit-name-${index}`).value.trim();
+
+            if (!newName || isNaN(newId)) {
+                alert('الرجاء التأكد من صحة البيانات المدخلة.');
+                return;
+            }
+
+            studentsData[gradeName][index] = { id: newId, name: newName };
+            saveToLocalStorage();
+            alert('تم تعديل بيانات الطالب بنجاح!');
+            loadAdminStudentsTable();
+        }
+
+        function deleteStudent(index) {
+            const gradeName = document.getElementById('admin-grade-select').value;
+            if (confirm('هل أنت متأكد من حذف هذا الطالب؟')) {
+                studentsData[gradeName].splice(index, 1);
+                saveToLocalStorage();
+                loadAdminStudentsTable();
+            }
+        }
+
+        function updateReports() {
+            const gradeName = document.getElementById('grade-select').value;
+            const selectedDateInput = document.getElementById('attendance-date').value;
+            const selectedPeriod = document.getElementById('class-period').value;
+            const tbody = document.getElementById('students-table-body');
+            tbody.innerHTML = '';
+
+            const currentStudents = studentsData[gradeName] || [];
+            if (currentStudents.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="color:var(--text-muted);">لا توجد أسماء طلاب مسجلة في هذا الصف حالياً</td></tr>';
+                return;
+            }
+
+            const existingLogsForPeriod = {};
+            attendanceLogs.forEach(log => {
+                if (log.grade === gradeName && log.date === selectedDateInput && log.period === selectedPeriod) {
+                    existingLogsForPeriod[log.studentId] = { status: log.status, note: log.note };
+                }
+            });
+
+            currentStudents.forEach(student => {
+                const savedRecord = existingLogsForPeriod[student.id] || { status: 'present', note: '' };
+                const tr = document.createElement('tr');
+                tr.dataset.studentId = student.id;
+                tr.innerHTML = `
+                    <td>${student.id}</td>
+                    <td class="student-name" style="font-weight: 600;">${student.name}</td>
+                    <td>
+                        <select class="status-select student-status">
+                            <option value="present" ${savedRecord.status === 'present' ? 'selected' : ''}>حاضر</option>
+                            <option value="absent" style="color: var(--danger);" ${savedRecord.status === 'absent' ? 'selected' : ''}>غائب</option>
+                            <option value="late" style="color: var(--accent);" ${savedRecord.status === 'late' ? 'selected' : ''}>متأخر</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="input-field student-note" value="${savedRecord.note}" placeholder="سبب الغياب/التأخير..." style="padding: 6px; margin: 0;"></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            refreshDailyComprehensiveReport();
+        }
+
+        function refreshDailyComprehensiveReport() {
+            const gradeName = document.getElementById('grade-select').value;
+            const selectedDateInput = document.getElementById('attendance-date').value;
+            const reportList = document.getElementById('daily-comprehensive-report-list');
+            const reportTitleEl = document.getElementById('daily-report-title');
+            reportList.innerHTML = '';
+
+            if (!gradeName) {
+                reportTitleEl.innerHTML = `<i class="fa-solid fa-calendar-day"></i> التقرير اليومي الشامل لليوم الكامل`;
+                reportList.innerHTML = `<li class="report-item" style="color: var(--text-muted); justify-content: center;">الرجاء اختيار صف لعرض تقريره اليومي</li>`;
+                return;
+            }
+
+            reportTitleEl.innerHTML = `<i class="fa-solid fa-calendar-day"></i> التقرير اليومي الشامل لليوم الكامل - صف: <span style="color: var(--secondary);">${gradeName}</span>`;
+
+            const dateParts = selectedDateInput ? selectedDateInput.split('-') : [];
+            const formattedDateDisplay = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : '';
+
+            const dayLogs = attendanceLogs.filter(log => log.grade === gradeName && log.date === selectedDateInput && (log.status === 'absent' || log.status === 'late'));
+
+            if (dayLogs.length === 0) {
+                reportList.innerHTML = `<li class="report-item" style="color: var(--success); justify-content: center;">
+                    <span><i class="fa-solid fa-circle-check"></i> لا توجد حالات غياب أو تأخير مسجلة لصف (${gradeName}) في هذا اليوم (${formattedDateDisplay})</span>
+                </li>`;
+                return;
+            }
+
+            const studentDayMap = {};
+
+            dayLogs.forEach(log => {
+                const key = log.studentId;
+                if (!studentDayMap[key]) {
+                    let studentName = `رقم الطالب: ${log.studentId}`;
+                    const studentsInGrade = studentsData[gradeName] || [];
+                    const found = studentsInGrade.find(s => s.id === log.studentId);
+                    if (found) {
+                        studentName = found.name;
+                    }
+                    studentDayMap[key] = {
+                        studentId: log.studentId,
+                        name: studentName,
+                        records: []
+                    };
+                }
+                studentDayMap[key].records.push({
+                    period: log.period,
+                    status: log.status,
+                    note: log.note,
+                    teacher: log.teacher
+                });
+            });
+
+            Object.values(studentDayMap).forEach(item => {
+                let periodsSummary = item.records.map(r => {
+                    const statusText = r.status === 'absent' ? '<span style="color: var(--danger);">غائب</span>' : '<span style="color: var(--accent);">متأخر</span>';
+                    return `<b>${r.period}</b>: ${statusText} [المعلم: ${r.teacher || 'غير محدد'}] - ${r.note || 'بدون عذر'}`;
+                }).join('<br>');
+
+                reportList.innerHTML += `
+                    <li class="report-item" style="align-items: flex-start; flex-direction: column; gap: 6px;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; flex-wrap: wrap;">
+                            <strong style="color: var(--text-main); font-size: 0.95rem;"><i class="fa-solid fa-user-tag"></i> ${item.name} <span style="color: var(--secondary); font-size: 0.75rem;">(الرقم: ${item.studentId})</span></strong>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">${formattedDateDisplay}</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); background: rgba(15, 23, 42, 0.4); padding: 8px 10px; border-radius: 6px; width: 100%; line-height: 1.5;">
+                            ${periodsSummary}
+                        </div>
+                    </li>`;
+            });
+        }
+
+        function findBaseGradeForStudent(studentId) {
+            for (const [gradeName, studentsList] of Object.entries(studentsData)) {
+                if (!gradeName.includes("متنقل") && !gradeName.includes("مادة")) {
+                    const found = studentsList.find(s => s.id === studentId);
+                    if (found) return gradeName;
+                }
+            }
+            for (const [gradeName, studentsList] of Object.entries(studentsData)) {
+                const found = studentsList.find(s => s.id === studentId);
+                if (found) return gradeName;
+            }
+            return null;
+        }
+
+        function markAllPresent() {
+            const teacherName = document.getElementById('teacher-name-select').value;
+            const selectedDateInput = document.getElementById('attendance-date').value;
+            const selectedPeriod = document.getElementById('class-period').value;
+            const gradeName = document.getElementById('grade-select').value;
+
+            if (!teacherName) {
+                alert('الرجاء اختيار اسم المعلم المسؤول أولاً.');
+                return;
+            }
+
+            if (!selectedDateInput) {
+                alert('الرجاء تحديد تاريخ اليوم الدراسي.');
+                return;
+            }
+
+            if (!gradeName) {
+                alert('الرجاء اختيار الصف الدراسي.');
+                return;
+            }
+
+            const statusSelects = document.querySelectorAll('.student-status');
+            statusSelects.forEach(sel => { sel.value = 'present'; });
+
+            const notesInputs = document.querySelectorAll('.student-note');
+            notesInputs.forEach(inp => { inp.value = ''; });
+
+            attendanceLogs = attendanceLogs.filter(log => !(log.grade === gradeName && log.date === selectedDateInput && log.period === selectedPeriod));
+
+            attendanceLogs.push({
+                date: selectedDateInput,
+                period: selectedPeriod,
+                grade: gradeName,
+                studentId: 0,
+                status: 'all_present',
+                note: 'جميع الطلاب حاضرين',
+                teacher: teacherName
+            });
+
+            saveToLocalStorage();
+            refreshDailyComprehensiveReport();
+            alert(`تم إثبات حضور جميع الطلاب في (${gradeName}) للحصة (${selectedPeriod}) بنجاح!`);
+        }
+
+        function saveAttendance() {
+            const teacherName = document.getElementById('teacher-name-select').value;
+            const selectedDateInput = document.getElementById('attendance-date').value;
+            const selectedPeriod = document.getElementById('class-period').value;
+            const gradeName = document.getElementById('grade-select').value;
+            
+            if (!teacherName) {
+                alert('الرجاء اختيار اسم المعلم المسؤول أولاً.');
+                return;
+            }
+
+            if (!selectedDateInput) {
+                alert('الرجاء تحديد تاريخ اليوم الدراسي.');
+                return;
+            }
+
+            if (!gradeName) {
+                alert('الرجاء اختيار الصف الدراسي.');
+                return;
+            }
+
+            const rows = document.querySelectorAll('#students-table-body tr');
+
+            attendanceLogs = attendanceLogs.filter(log => !(log.grade === gradeName && log.date === selectedDateInput && log.period === selectedPeriod));
+
+            let hasRecordedAbsenceOrLate = false;
+
+            rows.forEach(row => {
+                const studentId = Number(row.dataset.studentId);
+                const status = row.querySelector('.student-status').value;
+                const note = row.querySelector('.student-note').value || 'بدون عذر';
+
+                if (status !== 'present') {
+                    hasRecordedAbsenceOrLate = true;
+                    
+                    attendanceLogs.push({
+                        date: selectedDateInput,
+                        period: selectedPeriod,
+                        grade: gradeName,
+                        studentId: studentId,
+                        status: status,
+                        note: note,
+                        teacher: teacherName
+                    });
+
+                    const baseGrade = findBaseGradeForStudent(studentId);
+                    if (baseGrade && baseGrade !== gradeName) {
+                        attendanceLogs = attendanceLogs.filter(log => !(log.grade === baseGrade && log.date === selectedDateInput && log.period === selectedPeriod && log.studentId === studentId));
+                        
+                        attendanceLogs.push({
+                            date: selectedDateInput,
+                            period: selectedPeriod,
+                            grade: baseGrade,
+                            studentId: studentId,
+                            status: status,
+                            note: `${note} (مُسجل من صف متنقل: ${gradeName})`,
+                            teacher: teacherName
+                        });
+                    }
+                }
+            });
+
+            if (!hasRecordedAbsenceOrLate) {
+                attendanceLogs.push({
+                    date: selectedDateInput,
+                    period: selectedPeriod,
+                    grade: gradeName,
+                    studentId: 0,
+                    status: 'all_present',
+                    note: 'جميع الطلاب حاضرين',
+                    teacher: teacherName
+                });
+            }
+
+            saveToLocalStorage();
+            refreshDailyComprehensiveReport();
+
+            alert(`تم حفظ رصد الحضور لـ (${selectedPeriod}) وتحديث التقرير اليومي الشامل لصف (${gradeName}) بنجاح!`);
+        }
+
+        window.onload = function() {
+            populateGradeDropdown('grade-select');
+            populateTeacherDropdown(teachersData);
+        }
+    </script>
+</body>
+</html>
